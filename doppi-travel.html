@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Doppi Travel — Туры по Хорезму, Хива</title>
+<meta name="description" content="Doppi Travel — приватные однодневные туры к крепостям древнего Хорезма, экспедиции на Аральское море и трансферы между Хивой, Бухарой и Нукусом.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --khiva-blue:#0e6e8c;
+    --khiva-blue-dark:#0a4f66;
+    --clay:#c1793b;
+    --clay-dark:#a35f28;
+    --sand:#f6eedb;
+    --sand-light:#fbf6ea;
+    --ink:#1b2a41;
+    --ink-soft:#4a5872;
+    --flag-blue:#0099b5;
+    --flag-green:#1eb53a;
+    --flag-red:#ce1126;
+    --gold:#cc9b3f;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Manrope',sans-serif;
+    background:var(--sand-light);
+    color:var(--ink);
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.display{
+    font-family:'Cormorant Garamond',serif;
+    font-weight:700;
+    letter-spacing:.01em;
+  }
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 24px;}
+
+  /* --- girih tile pattern, used as a signature motif throughout --- */
+  .girih-bg{
+    background-image:
+      radial-gradient(circle at 10px 10px, rgba(14,110,140,.16) 1.6px, transparent 1.7px),
+      linear-gradient(45deg, rgba(193,121,59,.08) 25%, transparent 25%, transparent 75%, rgba(193,121,59,.08) 75%),
+      linear-gradient(45deg, rgba(193,121,59,.08) 25%, transparent 25%, transparent 75%, rgba(193,121,59,.08) 75%);
+    background-size:20px 20px, 40px 40px, 40px 40px;
+    background-position:0 0, 0 0, 20px 20px;
+  }
+  .divider{
+    height:14px;
+    background-image: repeating-linear-gradient(135deg, var(--khiva-blue) 0 6px, var(--clay) 6px 12px);
+    opacity:.85;
+  }
+  .divider.thin{height:5px;}
+
+  /* --- header --- */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(251,246,234,.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid rgba(27,42,65,.08);
+  }
+  .nav{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 24px;max-width:1160px;margin:0 auto;
+  }
+  .logo{
+    display:flex;align-items:center;gap:10px;
+    font-family:'Cormorant Garamond',serif;
+    font-weight:700;
+    font-size:1.7rem;
+    letter-spacing:.04em;
+    text-transform:uppercase;
+  }
+  .logo-doppi-container {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    padding-top: 14px;
+    cursor: pointer;
+  }
+  .doppi-cap-hat {
+    position: absolute;
+    top: -6px;
+    left: 0px;
+    z-index: 5;
+    transform-origin: bottom center;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    filter: drop-shadow(0 3px 6px rgba(0,0,0,0.2));
+  }
+  .logo:hover .doppi-cap-hat,
+  .logo-doppi-container:hover .doppi-cap-hat {
+    transform: translateY(-5px) rotate(-6deg) scale(1.1);
+  }
+  .logo .word{
+    color:var(--ink);
+    display:inline-flex;
+    gap: 6px;
+  }
+  .doppi-text {
+    color: var(--khiva-blue-dark);
+    font-weight: 800;
+    letter-spacing: 0.05em;
+  }
+  .flag-mark{
+    width:30px;height:20px;border-radius:3px;overflow:hidden;
+    box-shadow:0 0 0 1px rgba(27,42,65,.15);
+    flex:none;
+    position:relative;
+  }
+  .flag-mark svg{display:block;width:100%;height:100%;}
+  .nav-links{display:flex;gap:28px;font-size:.92rem;font-weight:600;color:var(--ink-soft);}
+  .nav-links a:hover{color:var(--khiva-blue);}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:11px 22px;border-radius:100px;
+    font-weight:700;font-size:.92rem;
+    border:2px solid transparent;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .btn-primary{background:var(--flag-green);color:#fff;box-shadow:0 6px 16px rgba(30,181,58,.3);}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 20px rgba(30,181,58,.35);}
+  .btn-outline{border-color:var(--khiva-blue);color:var(--khiva-blue);}
+  .btn-outline:hover{background:var(--khiva-blue);color:#fff;}
+  .burger{display:none;font-size:1.6rem;background:none;border:none;color:var(--ink);cursor:pointer;}
+
+  /* --- hero --- */
+  .hero{
+    position:relative;
+    padding:64px 24px 72px;
+    background:
+      radial-gradient(1200px 500px at 15% -10%, rgba(14,110,140,.18), transparent 60%),
+      radial-gradient(900px 500px at 100% 10%, rgba(193,121,59,.20), transparent 55%),
+      linear-gradient(180deg, var(--sand-light), var(--sand));
+    overflow:hidden;
+  }
+  .hero:before{
+    content:"";position:absolute;inset:0;
+    background-image:
+      radial-gradient(circle, rgba(14,110,140,.10) 1.4px, transparent 1.5px);
+    background-size:26px 26px;
+    pointer-events:none;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 44px;
+    align-items: center;
+    max-width: 1160px;
+    margin: 0 auto;
+    text-align: left;
+  }
+  .hero-text-side {
+    position: relative;
+    z-index: 2;
+  }
+  .hero-image-side {
+    position: relative;
+    z-index: 2;
+  }
+  .hero-image-card {
+    position: relative;
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: 0 20px 45px -15px rgba(27,42,65,0.35);
+    border: 4px solid #ffffff;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+  }
+  .hero-image-card:hover {
+    transform: translateY(-6px) scale(1.01);
+    box-shadow: 0 28px 55px -18px rgba(14,110,140,0.4);
+  }
+  .hero-image-card img {
+    width: 100%;
+    height: 440px;
+    object-fit: cover;
+    display: block;
+  }
+  .hero-image-badge {
+    position: absolute;
+    bottom: 18px;
+    left: 18px;
+    background: rgba(27, 42, 65, 0.88);
+    backdrop-filter: blur(8px);
+    color: #ffffff;
+    padding: 10px 16px;
+    border-radius: 14px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    border: 1px solid rgba(255,255,255,0.18);
+  }
+  .hero-image-badge-top {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(8px);
+    color: var(--ink);
+    padding: 8px 15px;
+    border-radius: 100px;
+    font-size: 0.8rem;
+    font-weight: 800;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:.8rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--clay-dark);
+    background:rgba(193,121,59,.12);
+    padding:7px 16px;border-radius:100px;
+    margin-bottom:22px;
+  }
+  .hero h1{
+    position:relative;z-index:1;
+    font-size:clamp(2.1rem, 4.2vw, 3.4rem);
+    color:var(--ink);
+    margin:0 0 20px;
+    line-height:1.12;
+  }
+  .hero h1 span{color:var(--khiva-blue);}
+  .hero p.lead{
+    position:relative;z-index:1;
+    margin:0 0 34px;
+    color:var(--ink-soft);
+    font-size:1.05rem;
+  }
+  .hero-actions{display:flex;gap:16px;justify-content:flex-start;flex-wrap:wrap;position:relative;z-index:1;}
+  .stats{
+    position:relative;z-index:1;
+    display:flex;justify-content:flex-start;gap:48px;
+    margin-top:48px;flex-wrap:wrap;
+  }
+  .stat b{display:block;font-family:'Cormorant Garamond',serif;font-size:2.1rem;color:var(--khiva-blue-dark);}
+  .stat span{font-size:.82rem;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.06em;}
+
+  /* --- section heading --- */
+  .section{padding:84px 24px;}
+  .section-head{max-width:640px;margin:0 auto 48px;text-align:center;}
+  .section-head .eyebrow{background:rgba(14,110,140,.1);color:var(--khiva-blue-dark);}
+  .section-head h2{font-size:clamp(1.9rem,3.2vw,2.6rem);}
+  .section-head p{color:var(--ink-soft);margin-top:12px;}
+
+  /* --- tour cards --- */
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;max-width:1160px;margin:0 auto;}
+  .card{
+    background:#fff;
+    border-radius:var(--radius);
+    padding:28px 26px 26px;
+    border:1px solid rgba(27,42,65,.07);
+    box-shadow:0 10px 30px -18px rgba(27,42,65,.25);
+    position:relative;
+    transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .card:hover{transform:translateY(-6px);box-shadow:0 18px 36px -18px rgba(14,110,140,.35);}
+  .card .icon{
+    width:52px;height:52px;border-radius:12px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:1.5rem;
+    background:linear-gradient(135deg,var(--khiva-blue),var(--khiva-blue-dark));
+    color:#fff;margin-bottom:18px;
+  }
+  .card .badge{
+    position:absolute;top:24px;right:22px;
+    font-size:.72rem;font-weight:700;color:var(--clay-dark);
+    background:rgba(193,121,59,.14);
+    padding:5px 10px;border-radius:100px;
+  }
+  .card h3{font-size:1.3rem;margin-bottom:8px;color:var(--ink);}
+  .card p{font-size:.92rem;color:var(--ink-soft);margin-bottom:16px;}
+  .card .route{font-size:.78rem;color:var(--khiva-blue-dark);font-weight:600;margin-bottom:14px;}
+  .card a.more{font-size:.85rem;font-weight:700;color:var(--flag-green);}
+
+  /* --- why us --- */
+  .why{background:var(--ink);color:#f2ead6;}
+  .why .section-head p{color:#c9d2df;}
+  .why .section-head .eyebrow{background:rgba(255,255,255,.08);color:var(--gold);}
+  .features{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;max-width:1160px;margin:0 auto;}
+  .feature{padding:22px 18px;text-align:center;}
+  .feature .fi{font-size:1.8rem;margin-bottom:12px;}
+  .feature h4{font-family:'Manrope';font-size:1rem;font-weight:700;margin-bottom:8px;}
+  .feature p{font-size:.86rem;color:#b8c2d1;}
+
+  /* --- hotel & reviews --- */
+  .hotel-wrap{
+    display:grid;grid-template-columns:0.85fr 1.4fr;gap:36px;
+    max-width:1160px;margin:0 auto;align-items:start;
+  }
+  .hotel-info{
+    background:#fff;border-radius:var(--radius);
+    padding:30px 28px;border:1px solid rgba(27,42,65,.07);
+    box-shadow:0 10px 30px -18px rgba(27,42,65,.25);
+    position:sticky;top:90px;
+  }
+  .rating-badge{display:flex;align-items:center;gap:12px;margin-bottom:22px;}
+  .rating-badge .num{font-family:'Cormorant Garamond';font-size:2.4rem;font-weight:700;color:var(--khiva-blue-dark);}
+  .rating-badge .stars{color:var(--gold);font-size:1.1rem;letter-spacing:1px;}
+  .rating-badge .count{font-size:.8rem;color:var(--ink-soft);}
+  .info-list{list-style:none;}
+  .info-list li{
+    display:flex;gap:10px;font-size:.9rem;color:var(--ink-soft);
+    padding:10px 0;border-top:1px dashed rgba(27,42,65,.12);
+  }
+  .info-list li:first-child{border-top:none;}
+  .info-list b{color:var(--ink);font-weight:700;min-width:96px;flex:none;}
+  .hotel-info .btn{width:100%;justify-content:center;margin-top:20px;}
+  .reviews-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;}
+  .review-card{
+    background:#fff;border-radius:12px;padding:20px 22px;
+    border:1px solid rgba(27,42,65,.07);
+    box-shadow:0 8px 22px -16px rgba(27,42,65,.22);
+  }
+  .review-card .stars{color:var(--gold);font-size:.85rem;letter-spacing:1px;margin-bottom:8px;}
+  .review-card p{font-size:.88rem;color:var(--ink-soft);margin-bottom:10px;}
+  .review-card .who{font-size:.78rem;font-weight:700;color:var(--khiva-blue-dark);}
+  .review-card .who span{font-weight:500;color:var(--ink-soft);}
+
+  /* --- booking steps --- */
+  .steps{max-width:760px;margin:0 auto;}
+  .step{display:flex;gap:18px;padding:18px 0;border-bottom:1px dashed rgba(27,42,65,.15);}
+  .step:last-child{border-bottom:none;}
+  .step .n{
+    flex:none;width:38px;height:38px;border-radius:50%;
+    background:var(--sand);border:2px solid var(--clay);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Cormorant Garamond';font-weight:700;color:var(--clay-dark);
+  }
+  .step h4{font-size:1rem;margin-bottom:4px;}
+  .step p{font-size:.88rem;color:var(--ink-soft);}
+
+  /* --- contact / cta --- */
+  .cta{
+    background:linear-gradient(135deg,var(--khiva-blue-dark),var(--khiva-blue));
+    color:#fff;border-radius:24px;
+    max-width:1000px;margin:0 auto;padding:56px 40px;
+    text-align:center;position:relative;overflow:hidden;
+  }
+  .cta:before{
+    content:"";position:absolute;inset:0;
+    background-image:radial-gradient(circle, rgba(255,255,255,.10) 1.4px, transparent 1.5px);
+    background-size:24px 24px;
+  }
+  .cta h2{position:relative;font-size:clamp(1.7rem,3vw,2.3rem);margin-bottom:14px;}
+  .cta p{position:relative;color:#dcecf1;max-width:520px;margin:0 auto 28px;}
+  .cta .hero-actions{position:relative;}
+  .cta .btn-outline{border-color:#fff;color:#fff;}
+  .cta .btn-outline:hover{background:#fff;color:var(--khiva-blue-dark);}
+
+  /* --- booking form --- */
+  .booking-form{
+    max-width:760px;margin:36px auto 0;padding:28px;
+    background:#fff;border:1px solid rgba(27,42,65,.08);border-radius:var(--radius);
+    box-shadow:0 10px 30px -18px rgba(27,42,65,.25);
+  }
+  .booking-form h3{font-size:1.45rem;margin-bottom:6px;}
+  .booking-form .form-intro{font-size:.9rem;color:var(--ink-soft);margin-bottom:20px;}
+  .form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+  .form-field{display:flex;flex-direction:column;gap:6px;}
+  .form-field.full{grid-column:1 / -1;}
+  .form-field label{font-size:.82rem;font-weight:700;color:var(--ink);}
+  .form-field input,.form-field select,.form-field textarea{
+    width:100%;border:1px solid rgba(27,42,65,.2);border-radius:9px;
+    padding:11px 12px;background:#fff;color:var(--ink);font:inherit;font-size:.9rem;
+  }
+  .form-field textarea{min-height:88px;resize:vertical;}
+  .form-field input:focus,.form-field select:focus,.form-field textarea:focus{
+    outline:3px solid rgba(14,110,140,.16);border-color:var(--khiva-blue);
+  }
+  .booking-form .btn{margin-top:20px;cursor:pointer;}
+  .booking-form .btn:disabled{opacity:.65;cursor:wait;transform:none;}
+  .form-status{min-height:1.5em;margin-top:12px;font-size:.87rem;color:var(--ink-soft);}
+  .form-status.success{color:#168432;}
+  .form-status.error{color:#b42318;}
+
+  /* --- footer --- */
+  footer{background:var(--ink);color:#c9d2df;padding:56px 24px 26px;}
+  .foot-grid{
+    display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:40px;
+    max-width:1160px;margin:0 auto 36px;
+  }
+  .foot-grid h5{font-family:'Manrope';color:#fff;font-size:.95rem;margin-bottom:14px;}
+  .foot-grid li{list-style:none;font-size:.88rem;margin-bottom:9px;}
+  .foot-grid a:hover{color:var(--gold);}
+  .foot-logo{margin-bottom:14px;}
+  .foot-grid p.about{font-size:.87rem;color:#aab5c4;max-width:320px;}
+  .bottom-bar{
+    max-width:1160px;margin:0 auto;
+    display:flex;justify-content:space-between;align-items:center;
+    padding-top:22px;border-top:1px solid rgba(255,255,255,.08);
+    font-size:.78rem;color:#8a95a6;flex-wrap:wrap;gap:10px;
+  }
+
+  @media (max-width:920px){
+    .grid{grid-template-columns:repeat(2,1fr);}
+    .features{grid-template-columns:repeat(2,1fr);}
+    .foot-grid{grid-template-columns:1fr 1fr;}
+    .hotel-wrap{grid-template-columns:1fr;}
+    .hotel-info{position:static;}
+  }
+  @media (max-width:680px){
+    .nav-links{display:none;}
+    .burger{display:block;}
+    .grid{grid-template-columns:1fr;}
+    .features{grid-template-columns:1fr;}
+    .foot-grid{grid-template-columns:1fr;}
+    .stats{gap:32px;}
+    .reviews-grid{grid-template-columns:1fr;}
+    .form-grid{grid-template-columns:1fr;}
+    .form-field.full{grid-column:auto;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <div class="logo">
+      <span class="logo-doppi-container">
+        <svg width="48" height="36" viewBox="0 0 120 90" fill="none" xmlns="http://www.w3.org/2000/svg" class="doppi-cap-hat" aria-label="O'zbek Chust do'ppisi">
+          <ellipse cx="60" cy="84" rx="52" ry="6" fill="rgba(0,0,0,0.35)" />
+          <path d="M 12 56 L 60 76 L 108 56 L 108 72 L 60 84 L 12 72 Z" fill="#0A0B0D" stroke="#FFFFFF" stroke-width="1.2" />
+          <path d="M 12 56 L 60 76 L 60 22 L 20 18 Z" fill="#14161B" stroke="#000000" stroke-width="1"/>
+          <path d="M 60 76 L 108 56 L 100 18 L 60 22 Z" fill="#1A1C22" stroke="#000000" stroke-width="1"/>
+          <path d="M 20 18 L 60 10 L 60 22 Z" fill="#0E1014"/>
+          <path d="M 60 10 L 100 18 L 60 22 Z" fill="#111317"/>
+          <path d="M 60 10 L 60 76" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M 20 18 L 100 18" stroke="#FFFFFF" stroke-width="2" opacity="0.85"/>
+          <path d="M 12 56 L 60 22 L 108 56" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>
+          <g filter="drop-shadow(0 1px 2px rgba(0,0,0,0.6))">
+            <path d="M 32 60 C 20 45 28 30 42 34 C 52 38 48 55 36 58 Z" fill="#FFFFFF" />
+            <path d="M 33 57 C 24 45 30 34 40 37 C 47 41 44 54 36 55 Z" fill="#14161B" />
+            <path d="M 36 53 Q 32 44 40 40" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="34" cy="48" r="1.5" fill="#FFFFFF"/>
+            <circle cx="39" cy="45" r="1.5" fill="#FFFFFF"/>
+            <circle cx="30" cy="53" r="1.2" fill="#FFFFFF"/>
+          </g>
+          <g filter="drop-shadow(0 1px 2px rgba(0,0,0,0.6))">
+            <path d="M 88 60 C 100 45 92 30 78 34 C 68 38 72 55 84 58 Z" fill="#FFFFFF" />
+            <path d="M 87 57 C 96 45 90 34 80 37 C 73 41 76 54 84 55 Z" fill="#1A1C22" />
+            <path d="M 84 53 Q 88 44 80 40" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="86" cy="48" r="1.5" fill="#FFFFFF"/>
+            <circle cx="81" cy="45" r="1.5" fill="#FFFFFF"/>
+            <circle cx="90" cy="53" r="1.2" fill="#FFFFFF"/>
+          </g>
+          <path d="M 14 62 Q 20 57 26 64" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"/>
+          <path d="M 26 64 Q 32 60 38 67" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"/>
+          <path d="M 38 67 Q 44 63 50 70" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"/>
+          <path d="M 50 70 Q 55 66 60 74" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"/>
+          <path d="M 60 74 Q 65 66 70 70" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"/>
+          <path d="M 70 70 Q 76 63 82 67" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"/>
+          <path d="M 82 67 Q 88 60 94 64" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"/>
+          <path d="M 94 64 Q 100 57 106 62" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"/>
+          <circle cx="20" cy="63" r="1.2" fill="#FFFFFF"/>
+          <circle cx="32" cy="66" r="1.2" fill="#FFFFFF"/>
+          <circle cx="44" cy="69" r="1.2" fill="#FFFFFF"/>
+          <circle cx="55" cy="72" r="1.2" fill="#FFFFFF"/>
+          <circle cx="65" cy="72" r="1.2" fill="#FFFFFF"/>
+          <circle cx="76" cy="69" r="1.2" fill="#FFFFFF"/>
+          <circle cx="88" cy="66" r="1.2" fill="#FFFFFF"/>
+          <circle cx="100" cy="63" r="1.2" fill="#FFFFFF"/>
+          <path d="M 12 72 L 60 84 L 108 72" stroke="#FFFFFF" stroke-width="2.2"/>
+          <polygon points="60,6 64,10 60,14 56,10" fill="#FFFFFF"/>
+        </svg>
+        <span class="word"><span class="doppi-text">Doppi</span> Travel</span>
+      </span>
+    </div>
+    <nav class="nav-links">
+      <a href="#tours">Туры</a>
+      <a href="#hotel">Отель</a>
+      <a href="#why">Почему мы</a>
+      <a href="#booking">Бронирование</a>
+      <a href="#contacts">Контакты</a>
+    </nav>
+    <a class="btn btn-primary" href="https://wa.me/998995060808" target="_blank" rel="noopener">WhatsApp</a>
+    <button class="burger" aria-label="Меню">☰</button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-grid">
+    <div class="hero-text-side">
+      <span class="eyebrow">✦ Хива · Узбекистан</span>
+      <h1>Однодневные туры к крепостям <span>древнего Хорезма</span></h1>
+      <p class="lead">Doppi Travel — местное агентство в Хиве. Организуем приватные и групповые поездки к пустынным крепостям, экспедиции на Аральское море и комфортные трансферы по Хорезмской области.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#tours">Смотреть туры</a>
+        <a class="btn btn-outline" href="https://wa.me/998995060808" target="_blank" rel="noopener">Написать в WhatsApp</a>
+      </div>
+      <div class="stats">
+        <div class="stat"><b>15+</b><span>крепостей в маршрутах</span></div>
+        <div class="stat"><b>2000&nbsp;лет</b><span>истории Хорезма</span></div>
+        <div class="stat"><b>24/7</b><span>на связи</span></div>
+      </div>
+    </div>
+    <div class="hero-image-side">
+      <div class="hero-image-card">
+        <span class="hero-image-badge-top">⭐ 4.9 · 15+ отзывов</span>
+        <img src="public/khiva-hero.jpg" alt="Ичан-Кала Хива Узбекистан sunset" />
+        <div class="hero-image-badge">
+          📍 Ичан-Кала, Хива · Узбекистан
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+
+<section class="section" id="tours">
+  <div class="section-head">
+    <span class="eyebrow">✦ Маршруты</span>
+    <h2>Приватные однодневные туры</h2>
+    <p>Забираем от отеля в Хиве, Ургенче или Нукусе. Машина, вода и русско/англоговорящий водитель уже включены.</p>
+  </div>
+  <div class="grid">
+
+    <div class="card">
+      <span class="badge">9–10 часов</span>
+      <div class="icon">🏰</div>
+      <h3>Шесть крепостей Хорезма</h3>
+      <div class="route">Хива → Топрак-Кала → Кызыл-Кала → Аяз-Кала</div>
+      <p>Классический маршрут по укреплениям кушанского и античного периодов среди пустыни Кызылкум.</p>
+      <a class="more" href="#booking">Забронировать →</a>
+    </div>
+
+    <div class="card">
+      <span class="badge">12–14 часов</span>
+      <div class="icon">🏜️</div>
+      <h3>Тринадцать крепостей</h3>
+      <div class="route">Хива → Гулдурсун-Кала → Аяз-Кала → Топрак-Кала</div>
+      <p>Расширенный маршрут для тех, кто хочет увидеть максимум городищ и сторожевых крепостей за один день.</p>
+      <a class="more" href="#booking">Забронировать →</a>
+    </div>
+
+    <div class="card">
+      <span class="badge">2 дня / 1 ночь</span>
+      <div class="icon">🌊</div>
+      <h3>Аральское море и юрт-лагерь</h3>
+      <div class="route">Нукус → плато Устюрт → Аральское море</div>
+      <p>Ночёвка в юрточном лагере на обрыве Устюрта и рассвет над бывшим четвёртым по величине озером мира.</p>
+      <a class="more" href="#booking">Забронировать →</a>
+    </div>
+
+    <div class="card">
+      <span class="badge">3–4 часа</span>
+      <div class="icon">🕌</div>
+      <h3>Дахма Чилпык и Нукус</h3>
+      <div class="route">Хива/Ургенч → Чилпык-Кала → Нукус</div>
+      <p>Зороастрийская «башня молчания» и музей Савицкого — короткая, но насыщенная поездка по пути в Нукус.</p>
+      <a class="more" href="#booking">Забронировать →</a>
+    </div>
+
+    <div class="card">
+      <span class="badge">2–3 часа</span>
+      <div class="icon">🕍</div>
+      <h3>Прогулка по Ичан-Кала</h3>
+      <div class="route">Внутри крепостных стен Хивы</div>
+      <p>Пешая экскурсия по старому городу: медресе, минареты, ремесленные мастерские и смотровые площадки.</p>
+      <a class="more" href="#booking">Забронировать →</a>
+    </div>
+
+    <div class="card" id="transfers">
+      <span class="badge">7–9 часов</span>
+      <div class="icon">🚐</div>
+      <h3>Трансфер с осмотром крепостей</h3>
+      <div class="route">Хива ⇄ Бухара, через Топрак-Кала и Кызыл-Кала</div>
+      <p>Едете дальше по маршруту? Совместите переезд между городами с остановками у древних городищ.</p>
+      <a class="more" href="#booking">Забронировать →</a>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider thin"></div>
+
+<section class="section" id="hotel">
+  <div class="section-head">
+    <span class="eyebrow">✦ Проживание</span>
+    <h2>Гостевой дом Doppi Hotel</h2>
+    <p>Останавливайтесь у нас в Ичан-Кала — в паре минут ходьбы от главных памятников старой Хивы.</p>
+  </div>
+  <div class="hotel-wrap">
+
+    <div class="hotel-info">
+      <div class="rating-badge">
+        <span class="num">4,7</span>
+        <div>
+          <div class="stars">★★★★★</div>
+          <div class="count">15 отзывов на Google</div>
+        </div>
+      </div>
+      <ul class="info-list">
+        <li><b>Адрес</b><span>ул. П. Махмуд 86, Ичан-Кала, Хива</span></li>
+        <li><b>Заезд</b><span>с 14:00</span></li>
+        <li><b>Выезд</b><span>до 12:00</span></li>
+        <li><b>Телефон</b><span>+998 99 506 08 08</span></li>
+        <li><b>Расположение</b><span>внутри крепостных стен Ичан-Кала</span></li>
+      </ul>
+      <a class="btn btn-primary" href="https://wa.me/998995060808" target="_blank" rel="noopener">Забронировать номер</a>
+    </div>
+
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p>Тихое расположение в самом старом городе — вышел из дверей, и вокруг красота. Рядом хорошая чайхана.</p>
+        <div class="who">Гость Google</div>
+      </div>
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p>Очень чистый и уютный семейный гестхаус в центре Ичан-Кала, все достопримечательности рядом, вкусный завтрак.</p>
+        <div class="who">Yekaterina M. <span>· местный эксперт</span></div>
+      </div>
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p>Просторные и современные номера, быстрый интернет, любезные хозяева и вкусный завтрак — идеальное место в старом городе.</p>
+        <div class="who">Maria R. <span>· местный эксперт</span></div>
+      </div>
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p>Почувствовали себя как дома: гостеприимная хозяйка, удобные номера рядом с историческими зданиями Ичан-Кала.</p>
+        <div class="who">Ece K.</div>
+      </div>
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p>Каждая потраченная копейка того стоит — чисто, сытный завтрак и внимательный сервис, будто в гостях у друзей.</p>
+        <div class="who">Chinoros N. <span>· местный эксперт</span></div>
+      </div>
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p>Прекрасное место, приятная семья хозяев, центральное расположение и великолепный завтрак — настоятельно рекомендую.</p>
+        <div class="who">Teresa B.</div>
+      </div>
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p>Всё было чисто и идеально, отличное расположение, хороший завтрак и очень дружелюбный персонал с улыбкой.</p>
+        <div class="who">Cristina G. <span>· местный эксперт</span></div>
+      </div>
+      <div class="review-card">
+        <div class="stars">★★★★☆</div>
+        <p>Хорошая цена и хороший завтрак — отличное соотношение цены и качества для старого города.</p>
+        <div class="who">Torsten R.</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider thin"></div>
+
+<section class="section why" id="why">
+  <div class="section-head">
+    <span class="eyebrow">✦ Doppi Travel</span>
+    <h2>Почему выбирают нас</h2>
+    <p>Мы живём и работаем в Хиве — знаем каждую дорогу к крепостям и лучшее время для фото.</p>
+  </div>
+  <div class="features">
+    <div class="feature">
+      <div class="fi">🧭</div>
+      <h4>Местные гиды и водители</h4>
+      <p>Знают историю каждой крепости и говорят по-русски и по-английски.</p>
+    </div>
+    <div class="feature">
+      <div class="fi">🚙</div>
+      <h4>Комфортный транспорт</h4>
+      <p>Седаны, внедорожники и минивэны с кондиционером — под размер вашей группы.</p>
+    </div>
+    <div class="feature">
+      <div class="fi">🗓️</div>
+      <h4>Гибкое расписание</h4>
+      <p>Отправление в удобное для вас время, маршрут можно скорректировать на месте.</p>
+    </div>
+    <div class="feature">
+      <div class="fi">💳</div>
+      <h4>Честная цена</h4>
+      <p>Стоимость поездки фиксируется заранее, без скрытых доплат.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="section" id="booking">
+  <div class="section-head">
+    <span class="eyebrow">✦ Бронирование</span>
+    <h2>Как забронировать поездку</h2>
+    <p>Бронирование бесплатное — просто пришлите нам данные в WhatsApp или Telegram.</p>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <div class="n">1</div>
+      <div><h4>Выберите тур или трансфер</h4><p>Название маршрута с этой страницы.</p></div>
+    </div>
+    <div class="step">
+      <div class="n">2</div>
+      <div><h4>Укажите дату и число участников</h4><p>Дата поездки и количество человек в группе.</p></div>
+    </div>
+    <div class="step">
+      <div class="n">3</div>
+      <div><h4>Сообщите место отправления</h4><p>Название отеля, аэропорта или вокзала для встречи.</p></div>
+    </div>
+    <div class="step">
+      <div class="n">4</div>
+      <div><h4>Получите подтверждение</h4><p>Мы пришлём подтверждение брони и данные водителя в течение дня.</p></div>
+    </div>
+  </div>
+  <form class="booking-form" id="bookingForm">
+    <h3>Отправить заявку</h3>
+    <p class="form-intro">Заполните форму — заявка сразу придёт менеджеру в Telegram.</p>
+    <div class="form-grid">
+      <div class="form-field">
+        <label for="customerName">Ваше имя</label>
+        <input id="customerName" name="name" type="text" autocomplete="name" required maxlength="80">
+      </div>
+      <div class="form-field">
+        <label for="customerContact">Телефон или Telegram</label>
+        <input id="customerContact" name="contact" type="text" autocomplete="tel" required maxlength="80">
+      </div>
+      <div class="form-field">
+        <label for="tour">Тур или услуга</label>
+        <select id="tour" name="tour" required>
+          <option value="" selected disabled>Выберите вариант</option>
+          <option>Шесть крепостей Хорезма</option>
+          <option>Тринадцать крепостей</option>
+          <option>Аральское море и юрт-лагерь</option>
+          <option>Дахма Чилпык и Нукус</option>
+          <option>Прогулка по Ичан-Кала</option>
+          <option>Трансфер с осмотром крепостей</option>
+          <option>Номер в Doppi Hotel</option>
+          <option>Другое</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label for="travelDate">Желаемая дата</label>
+        <input id="travelDate" name="date" type="date" required>
+      </div>
+      <div class="form-field">
+        <label for="guests">Количество гостей</label>
+        <input id="guests" name="guests" type="number" min="1" max="30" value="1" required>
+      </div>
+      <div class="form-field full">
+        <label for="details">Пожелания</label>
+        <textarea id="details" name="details" maxlength="1000" placeholder="Детали и что хотите увидеть"></textarea>
+      </div>
+    </div>
+    <button class="btn btn-primary" type="submit">Отправить заявку</button>
+    <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+  </form>
+</section>
+
+<section class="section" id="contacts">
+  <div class="cta">
+    <h2>Готовы открыть для себя Хорезм?</h2>
+    <p>Напишите нам, и мы подберём маршрут под ваши даты и интересы.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="https://wa.me/998995060808" target="_blank" rel="noopener">Написать в WhatsApp</a>
+      <a class="btn btn-outline" href="mailto:info@doppitravel.uz">info@doppitravel.uz</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-grid">
+    <div>
+      <div class="foot-logo logo">
+        <span class="logo-doppi-container">
+          <svg width="48" height="36" viewBox="0 0 120 90" fill="none" xmlns="http://www.w3.org/2000/svg" class="doppi-cap-hat" aria-label="O'zbek Chust do'ppisi">
+            <ellipse cx="60" cy="84" rx="52" ry="6" fill="rgba(0,0,0,0.35)" />
+            <path d="M 12 56 L 60 76 L 108 56 L 108 72 L 60 84 L 12 72 Z" fill="#0A0B0D" stroke="#FFFFFF" stroke-width="1.2" />
+            <path d="M 12 56 L 60 76 L 60 22 L 20 18 Z" fill="#14161B" stroke="#000000" stroke-width="1"/>
+            <path d="M 60 76 L 108 56 L 100 18 L 60 22 Z" fill="#1A1C22" stroke="#000000" stroke-width="1"/>
+            <path d="M 20 18 L 60 10 L 60 22 Z" fill="#0E1014"/>
+            <path d="M 60 10 L 100 18 L 60 22 Z" fill="#111317"/>
+            <path d="M 60 10 L 60 76" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M 20 18 L 100 18" stroke="#FFFFFF" stroke-width="2" opacity="0.85"/>
+            <path d="M 12 56 L 60 22 L 108 56" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>
+            <g filter="drop-shadow(0 1px 2px rgba(0,0,0,0.6))">
+              <path d="M 32 60 C 20 45 28 30 42 34 C 52 38 48 55 36 58 Z" fill="#FFFFFF" />
+              <path d="M 33 57 C 24 45 30 34 40 37 C 47 41 44 54 36 55 Z" fill="#14161B" />
+              <path d="M 36 53 Q 32 44 40 40" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>
+              <circle cx="34" cy="48" r="1.5" fill="#FFFFFF"/>
+              <circle cx="39" cy="45" r="1.5" fill="#FFFFFF"/>
+              <circle cx="30" cy="53" r="1.2" fill="#FFFFFF"/>
+            </g>
+            <g filter="drop-shadow(0 1px 2px rgba(0,0,0,0.6))">
+              <path d="M 88 60 C 100 45 92 30 78 34 C 68 38 72 55 84 58 Z" fill="#FFFFFF" />
+              <path d="M 87 57 C 96 45 90 34 80 37 C 73 41 76 54 84 55 Z" fill="#1A1C22" />
+              <path d="M 84 53 Q 88 44 80 40" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>
+              <circle cx="86" cy="48" r="1.5" fill="#FFFFFF"/>
+              <circle cx="81" cy="45" r="1.5" fill="#FFFFFF"/>
+              <circle cx="90" cy="53" r="1.2" fill="#FFFFFF"/>
+            </g>
+            <path d="M 14 62 Q 20 57 26 64" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"/>
+            <path d="M 26 64 Q 32 60 38 67" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"/>
+            <path d="M 38 67 Q 44 63 50 70" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"/>
+            <path d="M 50 70 Q 55 66 60 74" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"/>
+            <path d="M 60 74 Q 65 66 70 70" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"/>
+            <path d="M 70 70 Q 76 63 82 67" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"/>
+            <path d="M 82 67 Q 88 60 94 64" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"/>
+            <path d="M 94 64 Q 100 57 106 62" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"/>
+            <circle cx="20" cy="63" r="1.2" fill="#FFFFFF"/>
+            <circle cx="32" cy="66" r="1.2" fill="#FFFFFF"/>
+            <circle cx="44" cy="69" r="1.2" fill="#FFFFFF"/>
+            <circle cx="55" cy="72" r="1.2" fill="#FFFFFF"/>
+            <circle cx="65" cy="72" r="1.2" fill="#FFFFFF"/>
+            <circle cx="76" cy="69" r="1.2" fill="#FFFFFF"/>
+            <circle cx="88" cy="66" r="1.2" fill="#FFFFFF"/>
+            <circle cx="100" cy="63" r="1.2" fill="#FFFFFF"/>
+            <path d="M 12 72 L 60 84 L 108 72" stroke="#FFFFFF" stroke-width="2.2"/>
+            <polygon points="60,6 64,10 60,14 56,10" fill="#FFFFFF"/>
+          </svg>
+          <span class="word"><span class="doppi-text" style="color:#fff;">Doppi</span> Travel</span>
+        </span>
+      </div>
+      <p class="about">Местное туристическое агентство в Ичан-Кала, Хива. Организуем туры по крепостям Хорезма, поездки на Аральское море и трансферы по Узбекистану.</p>
+    </div>
+    <div>
+      <h5>Разделы</h5>
+      <ul>
+        <li><a href="#tours">Однодневные туры</a></li>
+        <li><a href="#transfers">Трансферы</a></li>
+        <li><a href="#why">Почему мы</a></li>
+        <li><a href="#booking">Бронирование</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>Контакты</h5>
+      <ul>
+        <li>ул. П. Махмуд 86, Ичан-Кала, Хива</li>
+        <li>WhatsApp: +998 99 506 08 08</li>
+        <li>info@doppitravel.uz</li>
+      </ul>
+    </div>
+  </div>
+  <div class="bottom-bar">
+    <span>© 2026 Doppi Travel. Все права защищены.</span>
+    <span>Сделано с любовью к Хорезму ✦</span>
+  </div>
+</footer>
+
+<script>
+  const bookingForm = document.getElementById('bookingForm');
+  const formStatus = document.getElementById('formStatus');
+
+  bookingForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const submitButton = bookingForm.querySelector('button[type="submit"]');
+    const originalText = submitButton.textContent;
+    submitButton.disabled = true;
+    submitButton.textContent = 'Отправляем…';
+    formStatus.className = 'form-status';
+    formStatus.textContent = '';
+
+    try {
+      const response = await fetch('/api/booking', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(Object.fromEntries(new FormData(bookingForm)))
+      });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok || !result.ok) throw new Error(result.error || 'Не удалось отправить заявку.');
+
+      bookingForm.reset();
+      formStatus.classList.add('success');
+      formStatus.textContent = 'Спасибо! Заявка отправлена. Мы скоро с вами свяжемся.';
+    } catch (error) {
+      formStatus.classList.add('error');
+      formStatus.textContent = error.message || 'Ошибка соединения. Попробуйте ещё раз или напишите в WhatsApp.';
+    } finally {
+      submitButton.disabled = false;
+      submitButton.textContent = originalText;
+    }
+  });
+</script>
+
+</body>
+</html>
