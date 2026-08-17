@@ -1,4 +1,4 @@
-export default function DoppiCap({ width = 48, height = 36, className = "", useImage = false }) {
+export default function DoppiCap({ width = 48, height = 36, className = "", useImage = true }) {
   if (useImage) {
     return (
       <img 
@@ -47,17 +47,8 @@ export default function DoppiCap({ width = 48, height = 36, className = "", useI
 
       {/* --- BODOM / QALAMPIR EMBROIDERY MOTIF (Left Facet) --- */}
       <g filter="drop-shadow(0 1px 2px rgba(0,0,0,0.6))">
-        {/* Outer Bodom Almond Shape */}
-        <path 
-          d="M 32 60 C 20 45 28 30 42 34 C 52 38 48 55 36 58 Z" 
-          fill="#FFFFFF" 
-        />
-        {/* Inner Black Velvet Cutout */}
-        <path 
-          d="M 33 57 C 24 45 30 34 40 37 C 47 41 44 54 36 55 Z" 
-          fill="#14161B" 
-        />
-        {/* Inner Embroidery Detailing */}
+        <path d="M 32 60 C 20 45 28 30 42 34 C 52 38 48 55 36 58 Z" fill="#FFFFFF" />
+        <path d="M 33 57 C 24 45 30 34 40 37 C 47 41 44 54 36 55 Z" fill="#14161B" />
         <path d="M 36 53 Q 32 44 40 40" fill="none" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round"/>
         <circle cx="34" cy="48" r="1.5" fill="#FFFFFF"/>
         <circle cx="39" cy="45" r="1.5" fill="#FFFFFF"/>
@@ -66,17 +57,8 @@ export default function DoppiCap({ width = 48, height = 36, className = "", useI
 
       {/* --- BODOM / QALAMPIR EMBROIDERY MOTIF (Right Facet) --- */}
       <g filter="drop-shadow(0 1px 2px rgba(0,0,0,0.6))">
-        {/* Outer Bodom Almond Shape */}
-        <path 
-          d="M 88 60 C 100 45 92 30 78 34 C 68 38 72 55 84 58 Z" 
-          fill="#FFFFFF" 
-        />
-        {/* Inner Black Velvet Cutout */}
-        <path 
-          d="M 87 57 C 96 45 90 34 80 37 C 73 41 76 54 84 55 Z" 
-          fill="#1A1C22" 
-        />
-        {/* Inner Embroidery Detailing */}
+        <path d="M 88 60 C 100 45 92 30 78 34 C 68 38 72 55 84 58 Z" fill="#FFFFFF" />
+        <path d="M 87 57 C 96 45 90 34 80 37 C 73 41 76 54 84 55 Z" fill="#1A1C22" />
         <path d="M 84 53 Q 88 44 80 40" fill="none" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round"/>
         <circle cx="86" cy="48" r="1.5" fill="#FFFFFF"/>
         <circle cx="81" cy="45" r="1.5" fill="#FFFFFF"/>
@@ -84,19 +66,16 @@ export default function DoppiCap({ width = 48, height = 36, className = "", useI
       </g>
 
       {/* --- 16 ARCHES ("TESHIKLAR") ALONG THE RIM --- */}
-      {/* Left Rim Arches */}
       <path d="M 14 62 Q 20 57 26 64" fill="none" stroke="#FFFFFF" strokeWidth="2.2" strokeLinecap="round"/>
       <path d="M 26 64 Q 32 60 38 67" fill="none" stroke="#FFFFFF" strokeWidth="2.2" strokeLinecap="round"/>
       <path d="M 38 67 Q 44 63 50 70" fill="none" stroke="#FFFFFF" strokeWidth="2.2" strokeLinecap="round"/>
       <path d="M 50 70 Q 55 66 60 74" fill="none" stroke="#FFFFFF" strokeWidth="2.2" strokeLinecap="round"/>
 
-      {/* Right Rim Arches */}
       <path d="M 60 74 Q 65 66 70 70" fill="none" stroke="#FFFFFF" strokeWidth="2.2" strokeLinecap="round"/>
       <path d="M 70 70 Q 76 63 82 67" fill="none" stroke="#FFFFFF" strokeWidth="2.2" strokeLinecap="round"/>
       <path d="M 82 67 Q 88 60 94 64" fill="none" stroke="#FFFFFF" strokeWidth="2.2" strokeLinecap="round"/>
       <path d="M 94 64 Q 100 57 106 62" fill="none" stroke="#FFFFFF" strokeWidth="2.2" strokeLinecap="round"/>
 
-      {/* Arch Flowers (Mini 3-leaf motives inside each arch) */}
       <circle cx="20" cy="63" r="1.2" fill="#FFFFFF"/>
       <circle cx="32" cy="66" r="1.2" fill="#FFFFFF"/>
       <circle cx="44" cy="69" r="1.2" fill="#FFFFFF"/>
@@ -106,10 +85,7 @@ export default function DoppiCap({ width = 48, height = 36, className = "", useI
       <circle cx="88" cy="66" r="1.2" fill="#FFFFFF"/>
       <circle cx="100" cy="63" r="1.2" fill="#FFFFFF"/>
 
-      {/* Bottom Rim White Border Line */}
       <path d="M 12 72 L 60 84 L 108 72" stroke="#FFFFFF" strokeWidth="2.2"/>
-
-      {/* Top Center Peak Button Knot */}
       <polygon points="60,6 64,10 60,14 56,10" fill="#FFFFFF"/>
     </svg>
   );
