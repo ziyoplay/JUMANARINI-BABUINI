@@ -46,9 +46,11 @@ function validateBooking(data) {
   const booking = {
     name: text(data.name, 80),
     contact: text(data.contact, 80),
-    tour: text(data.tour, 120),
+    tour: text(data.tour, 150),
+    vehicle: text(data.vehicle, 60),
     date: text(data.date, 10),
     guests: Number(data.guests),
+    pickup: text(data.pickup, 150),
     details: text(data.details, 1000)
   };
 
@@ -81,21 +83,31 @@ function formatContact(contact) {
   return `<code>${escapeHtml(contact)}</code>`;
 }
 
+function formatVehicle(v) {
+  if (v === 'suv') return '🚙 Внедорожник / SUV (1–4 чел)';
+  if (v === 'minivan') return '🚐 Минивэн (1–6 чел)';
+  return '🚗 Седан (1–3 чел)';
+}
+
 function bookingMessage(booking) {
   return [
     '✈️ <b>DOPPI TRAVEL</b>',
-    '<b>Yangi buyurtma</b>',
-    '━━━━━━━━━━━━━━',
+    '<b>Yangi buyurtma (Новая бронь)</b>',
+    '━━━━━━━━━━━━━━━━━━━',
     '',
-    `<b>👤 Mijoz</b>\n${escapeHtml(booking.name)}`,
+    `<b>👤 Mijoz (Имя)</b>\n${escapeHtml(booking.name)}`,
     '',
-    `<b>📱 Aloqa</b>\n${formatContact(booking.contact)}`,
+    `<b>📱 Aloqa (Контакты)</b>\n${formatContact(booking.contact)}`,
     '',
-    `<b>🧭 Tur / xizmat</b>\n${escapeHtml(booking.tour)}`,
+    `<b>🧭 Yo‘nalish (Маршрут)</b>\n${escapeHtml(booking.tour)}`,
     '',
-    `<b>📅 Sana va mehmonlar</b>\n${formatDate(booking.date)}  ·  ${booking.guests} kishi`,
+    `<b>🚗 Mashina turi (Авто)</b>\n${formatVehicle(booking.vehicle)}`,
     '',
-    `<b>📝 Qo‘shimcha ma’lumot</b>\n${escapeHtml(booking.details || 'Ko‘rsatilmagan')}`
+    `<b>📅 Sana va mehmonlar (Дата и гости)</b>\n${formatDate(booking.date)}  ·  ${booking.guests} kishi`,
+    '',
+    `<b>📍 Qayerdan olish (Место встречи)</b>\n${escapeHtml(booking.pickup || 'Doppi Hotel / Хива')}`,
+    '',
+    `<b>📝 Qo‘shimcha (Пожелания)</b>\n${escapeHtml(booking.details || '—')}`
   ].join('\n');
 }
 
